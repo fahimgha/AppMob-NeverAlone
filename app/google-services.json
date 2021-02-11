@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "98163550997",
+    "project_id": "neveralone-888f1",
+    "storage_bucket": "neveralone-888f1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:98163550997:android:dc21eebf4db6d39ba2d71c",
+        "android_client_info": {
+          "package_name": "com.example.neveralone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "98163550997-jhej7v47noeaicg4rk13r2jgh527kvk7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBmB4SPbtR48pVqlSEBNW2SLSz22T17J2E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "98163550997-jhej7v47noeaicg4rk13r2jgh527kvk7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
