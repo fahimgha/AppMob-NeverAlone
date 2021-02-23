@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -39,13 +40,18 @@ public class RegisterActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<SignInMethodQueryResult> task) {
                 if(task.isSuccessful())
                 {
+                    dialog.dismiss();
                     boolean check = !task.getResult().getSignInMethods().isEmpty();
 
                     if (!check)
                     {
                         //l'email n'existe pas donc on peut le créer
+                        Intent myIntent = new Intent(RegisterActivity.this,PasswordActivity.class);
+                        myIntent.putExtra("email",e_mail3.getText().toString());
+                        startActivity(myIntent);
                     }
                     else{
+                        dialog.dismiss();
                         Toast.makeText(getApplicationContext(),"This email is already registred",Toast.LENGTH_SHORT).show();
                     }
                 }
