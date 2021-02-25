@@ -15,8 +15,9 @@
         android:layout_alignParentBottom="true"
         android:layout_marginStart="51dp"
         android:layout_marginBottom="141dp"
-        android:text="se connecter"
         android:backgroundTint="@color/white"
+        android:onClick="goToLogin"
+        android:text="se connecter"
         android:textColor="@color/black"
         app:cornerRadius="10dp" />
 
@@ -28,8 +29,9 @@
         android:layout_alignParentBottom="true"
         android:layout_marginStart="51dp"
         android:layout_marginBottom="68dp"
-        android:text="Créer un compte"
         android:backgroundTint="@color/white"
+        android:onClick="goToRegister"
+        android:text="Créer un compte"
         android:textColor="@color/black"
         app:cornerRadius="10dp" />
 
