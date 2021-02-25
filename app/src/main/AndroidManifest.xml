@@ -14,7 +14,10 @@
         <activity android:name=".InviteCodeActivity"></activity>
         <activity android:name=".NameActivity" />
         <activity android:name=".PasswordActivity" />
+        <activity android:name=".RegisterActivity"/>
+        <activity android:name=".LoginActivity"/>
         <activity android:name=".MainActivity">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
