@@ -4,19 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".LoginActivity"
     >
 
-    <TextView
-        android:id="@+id/textView2"
+
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="57dp"
-        android:background="@color/orange"
-        android:gravity="center"
-        android:text="Se Connecter"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textSize="20dp" />
+        android:layout_height="wrap_content"
+        android:textSize="20dp">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/orange"
+            android:gravity="center"
+            app:title="Connexion"
+            app:titleTextColor="@color/black" />
+
+    </com.google.android.material.appbar.AppBarLayout>
 
 
     <LinearLayout
@@ -49,7 +56,12 @@
             android:ems="10"
             android:hint="Entrer votre email"
             android:inputType="textEmailAddress"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textColorHighlight="@color/orange"
+            android:textColorHint="#7A7A7A"
+            android:textColorLink="@color/orange"
+            android:textCursorDrawable="@color/black" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -79,7 +91,9 @@
             android:ems="10"
             android:hint="Entrer votre mot de passe"
             android:inputType="textEmailAddress"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textColorHint="#7A7A7A" />
 
     </LinearLayout>
 
@@ -87,7 +101,7 @@
         android:id="@+id/logIn"
         android:layout_width="160dp"
         android:layout_height="55dp"
-        android:layout_alignParentStart="true"
+        android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="127dp"
         android:layout_marginBottom="90dp"
@@ -95,10 +109,12 @@
         android:height="60dp"
         android:backgroundTint="@color/orange"
         android:onClick="login"
-        android:text="Continuer"
+        android:text="se connecter"
         android:textColor="@color/black"
         tools:layout_editor_absoluteX="125dp"
         tools:layout_editor_absoluteY="638dp" />
+
+
 
 
 </RelativeLayout>

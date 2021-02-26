@@ -4,41 +4,66 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
+    android:background="@color/white"
     tools:context=".NameActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/orange"
+            android:gravity="center"
+            app:title="Inscription"
+            app:titleTextColor="@color/black" />
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/circleImageView"
         android:layout_width="120dp"
         android:layout_height="120dp"
-        android:onClick="selectImage"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="48dp"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="141dp"
+        android:layout_marginTop="119dp"
+        android:onClick="selectImage"
         android:src="@drawable/ic_launcher_background" />
 
     <EditText
+
         android:id="@+id/editTextTextPersonName"
-        android:layout_width="341dp"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
         android:layout_marginStart="35dp"
-        android:layout_marginBottom="480dp"
+        android:layout_marginBottom="20dp"
         android:ems="10"
+        android:gravity="center"
         android:inputType="textPersonName"
         android:text="Votre nom"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textColorHint="#7A7A7A" />
 
     <Button
         android:id="@+id/button5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-
-        android:layout_centerVertical="true"
-        android:layout_marginStart="156dp"
-        android:layout_marginBottom="264dp"
+        android:layout_width="160dp"
+        android:layout_height="55dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="127dp"
+        android:layout_marginBottom="120dp"
+        android:width="300dp"
+        android:height="60dp"
+        android:backgroundTint="@color/orange"
         android:onClick="generateCode"
-        android:text="Suivant" />
+        android:text="Continuer"
+        android:textColor="@color/black"
+        tools:layout_editor_absoluteX="125dp"
+        tools:layout_editor_absoluteY="638dp" />
 </RelativeLayout>

@@ -11,11 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NeverAlone">
-        <activity android:name=".InviteCodeActivity"></activity>
+        <activity android:name=".InviteCodeActivity"/>
         <activity android:name=".NameActivity" />
         <activity android:name=".PasswordActivity" />
         <activity android:name=".RegisterActivity"/>
-        <activity android:name=".LoginActivity"/>
+        <activity android:name=".LoginActivity" />
         <activity android:name=".MainActivity">
 
             <intent-filter>
