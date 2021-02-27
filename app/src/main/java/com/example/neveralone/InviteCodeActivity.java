@@ -73,6 +73,10 @@ public class InviteCodeActivity extends AppCompatActivity {
                                                 progressDialog.dismiss();
 
                                                 Toast.makeText(getApplicationContext(), "User Registered successfully", Toast.LENGTH_SHORT).show();
+                                                auth.signOut();
+                                                finish();
+                                                Intent myIntent = new Intent(InviteCodeActivity.this, MyUserMainActivity.class);
+                                                startActivity(myIntent);
                                             } else
                                                 {
                                                 progressDialog.dismiss();

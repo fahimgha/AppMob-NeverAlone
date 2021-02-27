@@ -20,7 +20,7 @@ public class PasswordActivity extends AppCompatActivity {
         Intent myIntent = getIntent();
         if(myIntent!=null)
         {
-            email =myIntent.getStringExtra("email");
+            email = myIntent.getStringExtra("email");
         }
     }
     public void goToNamePicActivity(View v)
@@ -31,6 +31,7 @@ public class PasswordActivity extends AppCompatActivity {
             myIntent.putExtra("email",email);
             myIntent.putExtra("password", e2_password.getText().toString());
             startActivity(myIntent);
+            finish();
         }
         else
         {

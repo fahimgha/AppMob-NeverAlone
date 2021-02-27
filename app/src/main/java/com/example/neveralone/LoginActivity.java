@@ -3,6 +3,7 @@ package com.example.neveralone;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -35,6 +36,9 @@ public class LoginActivity extends AppCompatActivity {
                 if(task.isSuccessful())
                 {
                     Toast.makeText(getApplicationContext(),"L'utilisateur a réussi à se connecter",Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(LoginActivity.this, MyUserMainActivity.class);
+                    startActivity(intent);
+                    finish();
                 }
                 else
                 {

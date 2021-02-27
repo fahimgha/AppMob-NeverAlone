@@ -60,6 +60,7 @@ public class NameActivity extends AppCompatActivity {
 
 
             startActivity(myIntent);
+            finish();
 
         } else {
             Toast.makeText(getApplicationContext(), "Choisiez une Image s'il vous plait", Toast.LENGTH_SHORT).show();
