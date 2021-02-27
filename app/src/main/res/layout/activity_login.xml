@@ -84,7 +84,7 @@
         </LinearLayout>
 
         <EditText
-            android:id="@+id/editTextTextPassWord"
+            android:id="@+id/editTextPassWord"
             android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"

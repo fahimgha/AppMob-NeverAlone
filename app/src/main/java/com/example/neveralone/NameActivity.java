@@ -35,11 +35,11 @@ public class NameActivity extends AppCompatActivity {
         Intent myIntent = getIntent();
         if (myIntent != null) {
             email = myIntent.getStringExtra("email");
-            password = myIntent.getStringExtra("mot de passe");
+            password = myIntent.getStringExtra("password");
         }
     }
 
-    public void generateCode(View V) {
+    public void generateCode(View v) {
         Date myDate = new Date();
         SimpleDateFormat format1 = new SimpleDateFormat("aaaa-MM-dd HH:mm:ss a", Locale.getDefault());
         String date = format1.format(myDate);
@@ -53,8 +53,8 @@ public class NameActivity extends AppCompatActivity {
             myIntent.putExtra("name", e_PersonName.getText().toString());
             myIntent.putExtra("email", email);
             myIntent.putExtra("password", password);
-            myIntent.putExtra("date", myDate);
-            myIntent.putExtra("isSharing", false);
+            myIntent.putExtra("date", date);
+            myIntent.putExtra("isSharing", "false");
             myIntent.putExtra("code", code);
             myIntent.putExtra("ImageUri", resultUri);
 
@@ -66,10 +66,10 @@ public class NameActivity extends AppCompatActivity {
         }
     }
 
-    public void selectImage(View V) {
+    public void selectImage(View v) {
         Intent i = new Intent();
         i.setAction(Intent.ACTION_GET_CONTENT);
-        i.setType("images/*");
+        i.setType("image/*");
         startActivityForResult(i, 12);
     }
     @Override
@@ -87,6 +87,7 @@ public class NameActivity extends AppCompatActivity {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
                 resultUri = result.getUri();
+                circleImageView.setImageURI(resultUri);
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 Exception error = result.getError();
             }

@@ -25,7 +25,7 @@ public class PasswordActivity extends AppCompatActivity {
     }
     public void goToNamePicActivity(View v)
     {
-        if(e2_password.getText().toString().length() <6)
+        if(e2_password.getText().toString().length() >6)
         {
             Intent myIntent = new Intent(PasswordActivity.this, NameActivity.class);
             myIntent.putExtra("email",email);
@@ -34,7 +34,7 @@ public class PasswordActivity extends AppCompatActivity {
         }
         else
         {
-            Toast.makeText(getApplicationContext(), "La longueur du mot de passe doit etre superieur à 5 caracteres", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "La longueur du mot de passe doit etre superieur à 6 caracteres", Toast.LENGTH_SHORT).show();
         }
     }
 }
