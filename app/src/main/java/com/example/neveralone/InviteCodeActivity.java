@@ -66,7 +66,8 @@ public class InviteCodeActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful())
                         {
-                            CreateUser createUser = new CreateUser(name,email,password,code,"false","na","na");
+                            user = auth.getCurrentUser();
+                            CreateUser createUser = new CreateUser(name,email,password,code,"false","na","na",user.getUid());
                             user = auth.getCurrentUser();
                             userId = user.getUid();
 

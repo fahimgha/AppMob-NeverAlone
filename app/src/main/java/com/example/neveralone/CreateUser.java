@@ -5,7 +5,7 @@ public class CreateUser {
     {}
     public String name;
 
-    public CreateUser(String name, String email, String password, String code, String issharing, String lat, String lng) {
+    public CreateUser(String name, String email, String password, String code, String issharing, String lat, String lng,String userId) {
         this.name = name;
         this.email = email;
         this.password = password;
@@ -13,6 +13,7 @@ public class CreateUser {
         this.issharing = issharing;
         this.lat = lat;
         this.lng = lng;
+        this.userId = userId;
         //this.imageUrl = imageUrl;
     }
 
@@ -22,5 +23,6 @@ public class CreateUser {
     public String issharing;
     public String lat;
     public String lng;
+    public String userId;
     //public String imageUrl;
 }

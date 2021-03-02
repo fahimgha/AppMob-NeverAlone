@@ -128,6 +128,8 @@ public class MyUserMainActivity extends AppCompatActivity implements OnMapReadyC
                         break;
                     case R.id.nav_joinedCircle:
                         Toast.makeText(getApplicationContext(), "Join Circle is selected", Toast.LENGTH_LONG).show();
+                        Intent myIntent = new Intent(MyUserMainActivity.this,JoinCircleActivity.class);
+                        startActivity(myIntent);
                         break;
                     case R.id.nav_inviteFriends:
                         Toast.makeText(getApplicationContext(), "Invite Friends is selected", Toast.LENGTH_LONG).show();
