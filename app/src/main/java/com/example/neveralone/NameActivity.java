@@ -22,16 +22,16 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class NameActivity extends AppCompatActivity {
     String email, password;
     EditText e_PersonName;
-    CircleImageView circleImageView;
+    //CircleImageView circleImageView;
 
-    Uri resultUri;
+    //Uri resultUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_name);
         e_PersonName = (EditText) findViewById(R.id.editTextTextPersonName);
-        circleImageView = (CircleImageView) findViewById(R.id.circleImageView);
+        //circleImageView = (CircleImageView) findViewById(R.id.circleImageView);
         Intent myIntent = getIntent();
         if (myIntent != null) {
             email = myIntent.getStringExtra("email");
@@ -47,8 +47,8 @@ public class NameActivity extends AppCompatActivity {
 
         int n = 10000 + r.nextInt(900000);
         String code = String.valueOf(n);
-
-        if (resultUri != null) {
+        // a la place de e_PersonName remplacer par resultUri
+        if (e_PersonName.getText().toString().length()!=0) {
             Intent myIntent = new Intent(NameActivity.this, InviteCodeActivity.class);
             myIntent.putExtra("name", e_PersonName.getText().toString());
             myIntent.putExtra("email", email);
@@ -56,18 +56,17 @@ public class NameActivity extends AppCompatActivity {
             myIntent.putExtra("date", date);
             myIntent.putExtra("isSharing", "false");
             myIntent.putExtra("code", code);
-            myIntent.putExtra("ImageUri", resultUri);
-
+            //myIntent.putExtra("ImageUri", resultUri);
 
             startActivity(myIntent);
             finish();
 
         } else {
-            Toast.makeText(getApplicationContext(), "Choisiez une Image s'il vous plait", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Entrez votre nom s'il vous plait", Toast.LENGTH_SHORT).show();
         }
     }
 
-    public void selectImage(View v) {
+    /*public void selectImage(View v) {
         Intent i = new Intent();
         i.setAction(Intent.ACTION_GET_CONTENT);
         i.setType("image/*");
@@ -93,5 +92,5 @@ public class NameActivity extends AppCompatActivity {
                 Exception error = result.getError();
             }
         }
-    }
+    }*/
 }

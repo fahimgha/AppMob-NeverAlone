@@ -23,7 +23,7 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <de.hdodenhof.circleimageview.CircleImageView
+    <!-- <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/circleImageView"
         android:layout_width="120dp"
         android:layout_height="120dp"
@@ -32,7 +32,7 @@
         android:layout_marginStart="141dp"
         android:layout_marginTop="119dp"
         android:onClick="selectImage"
-        android:src="@drawable/ic_launcher_background" />
+        android:src="@drawable/ic_launcher_background" />-->
 
     <EditText
 

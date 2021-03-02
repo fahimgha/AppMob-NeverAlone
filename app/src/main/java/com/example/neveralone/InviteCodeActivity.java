@@ -18,16 +18,20 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 public class InviteCodeActivity extends AppCompatActivity {
 
     String name,email,password,date,issharing,code;
-    Uri imageUri;
+    //Uri imageUri;
     ProgressDialog progressDialog;
     TextView t1;
     FirebaseAuth auth;
     FirebaseUser user;
     DatabaseReference reference;
+    //StorageReference storageReference;
     String userId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,13 +43,14 @@ public class InviteCodeActivity extends AppCompatActivity {
         Intent myIntent = getIntent();
 
         reference = FirebaseDatabase.getInstance().getReference().child("Users");
+        //storageReference = FirebaseStorage.getInstance().getReference().child("User_images");
         if (myIntent != null) {
             name = myIntent.getStringExtra("name");
             email = myIntent.getStringExtra("email");
             password = myIntent.getStringExtra("password");
             code = myIntent.getStringExtra("code");
             issharing = myIntent.getStringExtra("isSharing");
-            imageUri= myIntent.getParcelableExtra("imageUri");
+            //imageUri= myIntent.getParcelableExtra("imageUri");
         }
         t1.setText(code);
 
@@ -61,30 +66,45 @@ public class InviteCodeActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful())
                         {
-                            CreateUser createUser = new CreateUser(name,email,password,code,"false","na","na","na");
+                            CreateUser createUser = new CreateUser(name,email,password,code,"false","na","na");
                             user = auth.getCurrentUser();
                             userId = user.getUid();
 
                             reference.child(userId).setValue(createUser)
-                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            if (task.isSuccessful()) {
-                                                progressDialog.dismiss();
+                                    .addOnCompleteListener(task1 -> {
+                                        if (task1.isSuccessful()) {
 
-                                                Toast.makeText(getApplicationContext(), "User Registered successfully", Toast.LENGTH_SHORT).show();
-                                                auth.signOut();
-                                                finish();
-                                                Intent myIntent = new Intent(InviteCodeActivity.this, MyUserMainActivity.class);
-                                                startActivity(myIntent);
-                                            } else
-                                                {
-                                                progressDialog.dismiss();
+                                            /*StorageReference sr = storageReference.child(user.getUid() + ".jpg");
+                                            sr.putFile(imageUri)
+                                                    .addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task1) {
+                                                            if (task1.isSuccessful()) {
+                                                                String download_image_path = task1.getResult().getMetadata().getReference().getDownloadUrl().toString();
+                                                                reference.child(user.getUid()).child("imageUrl").setValue(download_image_path)
+                                                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                            @Override
+                                                                            public void onComplete(@NonNull Task<Void> task1) {
+                                                                                if (task1.isSuccessful()) {*/
+                                                                                    progressDialog.dismiss();
+                                                                                    Toast.makeText(getApplicationContext(), "User Registered successfully", Toast.LENGTH_SHORT).show();
+                                                                                    Intent myIntent = new Intent(InviteCodeActivity.this, MyUserMainActivity.class);
+                                                                                    startActivity(myIntent);
+                                                                                /*} else {
+                                                                                    progressDialog.dismiss();
+                                                                                    Toast.makeText(getApplicationContext(), "erreur lors de la creation d'un compte", Toast.LENGTH_SHORT).show();
+                                                                                }
+                                                                            }
+                                                                        });
+                                                            }
+                                                        }
+                                                    });*/
 
+                                        }else {
+                                                progressDialog.dismiss();
                                                 Toast.makeText(getApplicationContext(), "Could not register user.", Toast.LENGTH_SHORT).show();
                                             }
-                                        }
-                                    });
+                                        });
                         }
                     }
 

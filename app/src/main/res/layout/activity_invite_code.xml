@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
     android:background="@color/white"
     tools:context=".InviteCodeActivity">
 
@@ -39,12 +40,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
+        android:layout_centerVertical="true"
         android:layout_marginTop="297dp"
         android:gravity="center_horizontal"
-        android:layout_centerVertical="true"
+        android:text="Sauvegarder ce code pour inviter vos amis à rejoindre votre cercle"
         android:textColor="@color/black"
-        android:text="Sauvegarder ce code pour inviter vos amis à rejoindre votre circle"
-        android:textSize="24sp" />
+        android:textSize="20sp" />
 
     <Button
         android:id="@+id/button66"
