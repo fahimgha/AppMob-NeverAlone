@@ -89,7 +89,7 @@ public class InviteCodeActivity extends AppCompatActivity {
                                                                                 if (task1.isSuccessful()) {*/
                                                                                     progressDialog.dismiss();
                                                                                     Toast.makeText(getApplicationContext(), "User Registered successfully", Toast.LENGTH_SHORT).show();
-                                                                                    Intent myIntent = new Intent(InviteCodeActivity.this, MyUserMainActivity.class);
+                                                                                    Intent myIntent = new Intent(InviteCodeActivity.this, MapsActivity.class);
                                                                                     startActivity(myIntent);
                                                                                 /*} else {
                                                                                     progressDialog.dismiss();

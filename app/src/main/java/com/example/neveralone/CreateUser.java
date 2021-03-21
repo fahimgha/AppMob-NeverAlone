@@ -4,6 +4,13 @@ public class CreateUser {
     public CreateUser()
     {}
     public String name;
+    public String email;
+    public String password;
+    public String code;
+    public String issharing;
+    public String lat;
+    public String lng;
+    public String userId;
 
     public CreateUser(String name, String email, String password, String code, String issharing, String lat, String lng,String userId) {
         this.name = name;
@@ -14,15 +21,7 @@ public class CreateUser {
         this.lat = lat;
         this.lng = lng;
         this.userId = userId;
-        //this.imageUrl = imageUrl;
+
     }
 
-    public String email;
-    public String password;
-    public String code;
-    public String issharing;
-    public String lat;
-    public String lng;
-    public String userId;
-    //public String imageUrl;
 }

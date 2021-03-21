@@ -36,7 +36,7 @@ public class LoginActivity extends AppCompatActivity {
                 if(task.isSuccessful())
                 {
                     Toast.makeText(getApplicationContext(),"L'utilisateur a réussi à se connecter",Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(LoginActivity.this, MyUserMainActivity.class);
+                    Intent intent = new Intent(LoginActivity.this, MapsActivity.class);
                     startActivity(intent);
                     finish();
                 }
