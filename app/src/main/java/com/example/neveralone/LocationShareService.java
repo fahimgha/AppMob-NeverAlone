@@ -81,9 +81,6 @@ public class LocationShareService extends Service implements LocationListener, G
 
         // display notification
 
-
-
-
     }
 
     private void displayNotifications()
@@ -171,10 +168,6 @@ public class LocationShareService extends Service implements LocationListener, G
 
     public void shareLocation()
     {
-        //Date date = new Date();
-
-        //SimpleDateFormat sdf1 = new SimpleDateFormat("dd-MMM-yyyy hh:mm", Locale.getDefault());
-        //String myDate = sdf1.format(date);
 
         reference.child(user.getUid()).child("issharing").setValue("true");
 

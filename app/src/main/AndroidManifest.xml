@@ -37,7 +37,8 @@
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps"></activity>
-        <activity android:name=".MyCircleActivity" />
+        <activity android:name=".MyCircleActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity android:name=".JoinCircleActivity" />
         <activity android:name=".InviteCodeActivity" />
         <activity android:name=".NameActivity" />

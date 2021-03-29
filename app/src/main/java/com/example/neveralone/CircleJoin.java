@@ -4,9 +4,9 @@ public class CircleJoin {
 
     public String circlememberid;
 
-    public CircleJoin(String circlemenberid){
+    public CircleJoin(String circlememberid){
 
-        this.circlememberid = circlemenberid;
+        this.circlememberid = circlememberid;
      }
 
      public CircleJoin(){

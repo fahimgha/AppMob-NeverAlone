@@ -5,5 +5,6 @@
     <item android:title="Refresh"
         android:icon="@drawable/ic_refresh"
         android:id="@+id/navRefresh"
-        app:showAsAction="always"></item>
+        app:showAsAction="always">
+    </item>
 </menu>

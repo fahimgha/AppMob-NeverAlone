@@ -59,16 +59,9 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 
-public class HomeFragment extends Fragment implements OnMapReadyCallback,
-        GoogleApiClient.ConnectionCallbacks
-        , GoogleApiClient.OnConnectionFailedListener, LocationListener, ResultCallback {
-    GoogleMap mMap;
-    GoogleApiClient client;
-    LocationRequest request;
-    LatLng latLngCurrent;
-    Marker marker;
+public class HomeFragment extends Fragment {
     DatabaseReference reference;
-    private ValueAnimator lastPulseAnimator;
+
     FirebaseAuth auth;
     FirebaseUser user;
 
@@ -87,179 +80,11 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
         user = auth.getCurrentUser();
 
         reference = FirebaseDatabase.getInstance().getReference().child("Users");
-        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
-
-    }
-
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
-
-
-        googleMap.getUiSettings().setMyLocationButtonEnabled(true);
-        client = new GoogleApiClient.Builder(getContext())
-                .addApi(LocationServices.API)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .build();
-        client.connect();
-    }
-
-    @Override
-    public void onConnected(@Nullable Bundle bundle) {
-        request = new LocationRequest().create();
-        request.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        request.setInterval(7000);
-
-        if (ActivityCompat.checkSelfPermission(getContext(),
-                android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            return;
-        }
-        LocationServices.FusedLocationApi.requestLocationUpdates(client, request, this);
-
-        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
-                .addLocationRequest(request);
-        builder.setAlwaysShow(true);
-        PendingResult result =
-                LocationServices.SettingsApi.checkLocationSettings(
-                        client,
-                        builder.build()
-                );
-        result.setResultCallback(this);  // dialog for location
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-
-    }
-
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
-    }
-
-    @Override
-    public void onResult(@NonNull Result result) {
-        final Status status = result.getStatus();
-        switch (status.getStatusCode()) {
-            case LocationSettingsStatusCodes.SUCCESS:
-                break;
-
-            case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
-
-                try {
-
-
-                    status.startResolutionForResult(getActivity(), 100);
-
-                } catch (IntentSender.SendIntentException e) {
-                    e.printStackTrace();
-                }
-                break;
-
-
-
-            case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
-
-                break;
-        }
-    }
-
-    @Override
-    public void onLocationChanged(Location location)
-    {
-
-        latLngCurrent = new LatLng(location.getLatitude(), location.getLongitude());
-        if (marker == null) {
-            marker = mMap.addMarker(new MarkerOptions().position(latLngCurrent).title("Current Location").icon(BitmapDescriptorFactory.fromResource(R.drawable.current_location_pointer)));
-
-            CameraPosition cameraPosition =
-                    new CameraPosition.Builder()
-                            .target(latLngCurrent)
-                            .bearing(43)
-                            .tilt(90)
-                            .zoom(14.0f)
-                            .build();
-            mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-            createRippleEffect(latLngCurrent);
-
-
-        } else {
-            marker.setPosition(latLngCurrent);
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLngCurrent, 13));
-        }
-
-    }
-
-
-    private void createRippleEffect(final LatLng sourceLocation) {
-
-        // First ripple effect
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                final GroundOverlay groundOverlay11 = mMap.addGroundOverlay(new
-                        GroundOverlayOptions()
-                        .position(sourceLocation, 2000)
-                        .transparency(0.6f)
-                        .image(BitmapDescriptorFactory.fromResource(R.drawable.riple_icon)));
-                OverLay(groundOverlay11, 6000);
-            }
-        }, 0);
-
-        //Second ripple effect
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                final GroundOverlay groundOverlay12 = mMap.addGroundOverlay(new
-                        GroundOverlayOptions()
-                        .position(sourceLocation, 2000)
-                        .transparency(0.6f)
-                        .image(BitmapDescriptorFactory.fromResource(R.drawable.riple_icon)));
-                OverLay(groundOverlay12, 5000);
-            }
-        }, 0);
-
-        //Third ripple effect
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                final GroundOverlay groundOverlay13 = mMap.addGroundOverlay(new
-                        GroundOverlayOptions()
-                        .position(sourceLocation, 200)
-                        .transparency(0.6f)
-                        .image(BitmapDescriptorFactory.fromResource(R.drawable.riple_icon)));
-                OverLay(groundOverlay13, 4000);
-            }
-        }, 0);
 
     }
 
 
 
-    public void OverLay(final GroundOverlay groundOverlay, int duration) {
-        lastPulseAnimator = ValueAnimator.ofInt(0, 1500);
-        int r = 99999;
-        lastPulseAnimator.setRepeatCount(r);
-        //lastPulseAnimator.setIntValues(0, 500);
-        lastPulseAnimator.setDuration(duration);
-        lastPulseAnimator.setEvaluator(new IntEvaluator());
-        lastPulseAnimator.setInterpolator(new LinearInterpolator());
-        lastPulseAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                float animatedFraction = valueAnimator.getAnimatedFraction();
-                Integer i = (Integer) valueAnimator.getAnimatedValue();
-                groundOverlay.setDimensions(i);
-                groundOverlay.setTransparency(animatedFraction);
-            }
-        });
-        lastPulseAnimator.start();
-    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {

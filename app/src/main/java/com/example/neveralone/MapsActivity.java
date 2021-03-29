@@ -31,9 +31,12 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -56,9 +59,10 @@ import com.google.firebase.database.ValueEventListener;
 
 
 import java.util.ArrayList;
+import java.util.Map;
 
 
-public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback,GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, NavigationView.OnNavigationItemSelectedListener, LocationListener {
+public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback,GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, NavigationView.OnNavigationItemSelectedListener,LocationListener {
 
     private AppBarConfiguration mAppBarConfiguration;
     private NavigationView navigationView;
@@ -80,13 +84,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     MarkerOptions myOptions;
     TextView t1_name,t2_email;
     String current_user_email;
+    String current_user_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_navigation);
-        Toolbar toolbar = findViewById(R.id.toolbar);
         buildGoogleApiClient();
+        Toolbar toolbar = findViewById(R.id.toolbar);
+
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
 
@@ -144,19 +150,16 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                 databaseReference.addValueEventListener(new ValueEventListener() {
                     @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         myName = dataSnapshot.child("name").getValue(String.class);
                         myLat = dataSnapshot.child("lat").getValue(String.class);
                         myLng = dataSnapshot.child("lng").getValue(String.class);
-                        current_user_email = dataSnapshot.child("email").getValue(String.class);
-
-                        //t1_name.setText(myName);
+                        current_user_name = dataSnapshot.child(user.getUid()).child("name").getValue(String.class);
+                        current_user_email = dataSnapshot.child(user.getUid()).child("email").getValue(String.class);
+                        t1_name.setText(current_user_name);
                         t2_email.setText(current_user_email);
-                        if(friendLatLng == null){
-                            Toast.makeText(getApplicationContext(), "Could not Share or Stop Location", Toast.LENGTH_SHORT).show();
-                        }
 
-                        else{
+                        if(friendLatLng!=null){
                             friendLatLng = new LatLng(Double.parseDouble(myLat),Double.parseDouble(myLng));
                             myOptions = new MarkerOptions();
                             myOptions.position(friendLatLng);
@@ -175,6 +178,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                         }
 
+                    }
+                    private void setUpViews() {
+                        t1_name = header.findViewById(R.id.name);
+                        t2_email = header.findViewById(R.id.email_text);
+                        t1_name.setText(current_user_name);
+                        t2_email.setText(current_user_email);
                     }
 
                     @Override
@@ -261,46 +270,22 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             super.onBackPressed();
         }
     }
-
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
+    public synchronized void buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .addApi(LocationServices.API)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
                 .build();
         mGoogleApiClient.connect();
-        mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
-            @Override
-            public View getInfoWindow(Marker marker) {
-                return null;
-            }
+    }
+    @Override
 
-            @Override
-            public View getInfoContents(Marker marker) {
-                View row = getLayoutInflater().inflate(R.layout.custom_snippet,null);
-                TextView nameTxt = row.findViewById(R.id.snippetName);
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+        mMap.getUiSettings().setMyLocationButtonEnabled(true);
 
-                if(myName == null)
-                {
-                    nameTxt.setText(name);
 
-                }
-                else
-                {
-                    nameTxt.setText(myName);
-
-                }
-                return row;
-            }
-        });
-
-        if(friendLatLng == null){
-            Toast.makeText(getApplicationContext(), "Could not stop Location", Toast.LENGTH_SHORT).show();
-        }
-        else
-        {
+        if(friendLatLng!=null){
             friendLatLng = new LatLng(Double.parseDouble(latitude),Double.parseDouble(longitude));
             MarkerOptions optionsnew = new MarkerOptions();
 
@@ -342,14 +327,25 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onConnected(@Nullable Bundle bundle) {
         mLocationRequest = new LocationRequest().create();
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        mLocationRequest.setInterval(1000);
+        mLocationRequest.setInterval(7000);
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
+        if (ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
             return;
         }
-        //LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
+        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
+
+        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
+                .addLocationRequest(mLocationRequest);
+        builder.setAlwaysShow(true);
+        PendingResult result =
+                LocationServices.SettingsApi.checkLocationSettings(
+                        mGoogleApiClient,
+                        builder.build()
+                );
+        //result.setResultCallback((ResultCallback)this);  // dialog for location
     }
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
@@ -360,14 +356,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onConnectionSuspended(int i) {
 
     }
-    public synchronized void buildGoogleApiClient() {
-        mGoogleApiClient = new GoogleApiClient.Builder(getBaseContext())
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .addApi(LocationServices.API)
-                .build();
-        mGoogleApiClient.connect();
-    }
+
     @Override
     public void onLocationChanged(Location location) {
         if(location == null){
@@ -382,15 +371,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             mMap.addMarker(options);
         }
     }
-     /*@Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-       // handle arrow click here
-        if (item.getItemId() == android.R.id.home) {
-            finish(); // close this activity and return to preview activity (if there is any)
-        }
-
-        return super.onOptionsItemSelected(item);
-    }*/
 
 
 }
