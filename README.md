@@ -4,7 +4,7 @@ Application permettant de localiser ses amis en temps réel dans un environnemen
 Auteurs :
 Fahim GHARSA
 Christopher DIOMANDE
-Matthew RODRIGUES
+Mathieu RODRIGUES
 Flavio ROBALO RODRIGUES
 
 Compte rendu :
