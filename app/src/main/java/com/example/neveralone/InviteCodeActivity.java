@@ -23,13 +23,12 @@ import com.google.firebase.database.FirebaseDatabase;
 public class InviteCodeActivity extends AppCompatActivity {
 
     String name,email,password,date,issharing,code;
-    //Uri imageUri;
+
     ProgressDialog progressDialog;
     TextView t1;
     FirebaseAuth auth;
     FirebaseUser user;
     DatabaseReference reference;
-    //StorageReference storageReference;
     String userId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

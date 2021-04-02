@@ -159,9 +159,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         t1_name.setText(current_user_name);
                         t2_email.setText(current_user_email);
 
-                        if(friendLatLng!=null){
+
                             friendLatLng = new LatLng(Double.parseDouble(myLat),Double.parseDouble(myLng));
-                            myOptions = new MarkerOptions();
+
+                            MarkerOptions options = new MarkerOptions();
+                           options.position(friendLatLng);
+                           options.title("SA Postition Actuelle");
+                           mMap.addMarker(options);
+                            /*myOptions = new MarkerOptions();
                             myOptions.position(friendLatLng);
                             //myOptions.snippet("Last seen: "+myDate);
                             myOptions.title(myName);
@@ -174,9 +179,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                             else
                             {
                                 marker.setPosition(friendLatLng);
-                            }
+                            }*/
 
-                        }
+
 
                     }
                     private void setUpViews() {
@@ -224,19 +229,19 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                 switch (item.getItemId()) {
                     case R.id.nav_signOut:
-                        Toast.makeText(getApplicationContext(), "SignOut is selected", Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getApplicationContext(), "SignOut is selected", Toast.LENGTH_LONG).show();
                         auth.signOut();
                         Intent intent = new Intent(MapsActivity.this, MainActivity.class);
                         startActivity(intent);
                         finish();
                         break;
                     case R.id.nav_myCirlce:
-                        Toast.makeText(getApplicationContext(), "My Circle is selected", Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getApplicationContext(), "My Circle is selected", Toast.LENGTH_LONG).show();
                         Intent myIntent2 = new Intent(MapsActivity.this, MyCircleActivity.class);
                         startActivity(myIntent2);
                         break;
                     case R.id.nav_joinedCircle:
-                        Toast.makeText(getApplicationContext(), "Join Circle is selected", Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getApplicationContext(), "Join Circle is selected", Toast.LENGTH_LONG).show();
                         Intent myIntent = new Intent(MapsActivity.this, JoinCircleActivity.class);
                         startActivity(myIntent);
                         break;
@@ -245,9 +250,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         break;
                     case R.id.nav_shareLoc:
                         Intent i = new Intent(Intent.ACTION_SEND);
-                        //i.setType("text/plain");
-                        //i.putExtra(Intent.EXTRA_TEXT, "Ma géolocalisation  : " + "https://www.google.com/maps/@" + latLng.latitude + "," + latLng.longitude + ",17z");
-                        //startActivity(i.createChooser(i, "Partager en utilisant: "));
+                        i.setType("text/plain");
+                        i.putExtra(Intent.EXTRA_TEXT, "Ma géolocalisation  : " + "https://www.google.com/maps/@" + mLastLocation.latitude + "," + mLastLocation.longitude + ",17z");
+                        startActivity(i.createChooser(i, "Partager en utilisant: "));
                         Toast.makeText(getApplicationContext(), "Share Location is selected", Toast.LENGTH_LONG).show();
                         break;
                 }
@@ -287,26 +292,24 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         if(friendLatLng!=null){
             friendLatLng = new LatLng(Double.parseDouble(latitude),Double.parseDouble(longitude));
-            MarkerOptions optionsnew = new MarkerOptions();
+            MarkerOptions options = new MarkerOptions();
+            options.position(friendLatLng);
+            options.title("SA Postition Actuelle");
+            mMap.addMarker(options);
+                            /*myOptions = new MarkerOptions();
+                            myOptions.position(friendLatLng);
+                            //myOptions.snippet("Last seen: "+myDate);
+                            myOptions.title(myName);
 
-            optionsnew.position(friendLatLng);
-            optionsnew.title(name);
-            optionsnew.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-
-
-
-
-        if(marker == null)
-        {
-            marker = mMap.addMarker(optionsnew);
-        }
-        else
-        {
-            marker.setPosition(friendLatLng);
-        }
-
-
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(friendLatLng,15));
+                            if(marker == null)
+                            {
+                                marker = mMap.addMarker(myOptions);
+                                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(friendLatLng,15));
+                            }
+                            else
+                            {
+                                marker.setPosition(friendLatLng);
+                            }*/
         }
 
 
@@ -367,7 +370,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             mLastLocation = new LatLng(location.getLatitude(),location.getLongitude());
             MarkerOptions options = new MarkerOptions();
             options.position(mLastLocation);
-            options.title("Current Location");
+            options.title("Ma Postition Actuelle");
             mMap.addMarker(options);
         }
     }

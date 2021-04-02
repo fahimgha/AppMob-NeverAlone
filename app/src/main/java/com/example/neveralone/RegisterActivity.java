@@ -34,8 +34,11 @@ public class RegisterActivity extends AppCompatActivity {
 
     public void goToPasswordActivity(View v)
     {
-        //verifier si le mail est déja enregistré ou pas
-        auth.fetchSignInMethodsForEmail(e_mail3.getText().toString()).addOnCompleteListener(new OnCompleteListener<SignInMethodQueryResult>() {
+
+        //recuper la liste d'email
+        auth.fetchSignInMethodsForEmail(e_mail3.getText().toString())
+                //verifier si le mail est déja enregistré ou pas
+                .addOnCompleteListener(new OnCompleteListener<SignInMethodQueryResult>() {
             @Override
             public void onComplete(@NonNull Task<SignInMethodQueryResult> task) {
                 if(task.isSuccessful())
@@ -46,6 +49,7 @@ public class RegisterActivity extends AppCompatActivity {
                     if (!check)
                     {
                         //l'email n'existe pas donc on peut le créer
+                        //envoyer le mail à une autre activity
                         Intent myIntent = new Intent(RegisterActivity.this,PasswordActivity.class);
                         myIntent.putExtra("email",e_mail3.getText().toString());
                         startActivity(myIntent);
@@ -53,7 +57,7 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                     else{
                         dialog.dismiss();
-                        Toast.makeText(getApplicationContext(),"This email is already registred",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),"Ce mail est déjà pris",Toast.LENGTH_SHORT).show();
                     }
                 }
             }

@@ -35,7 +35,7 @@ public class PasswordActivity extends AppCompatActivity {
         }
         else
         {
-            Toast.makeText(getApplicationContext(), "La longueur du mot de passe doit etre superieur à 6 caracteres", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Le mot de passe doit être composé de 6 caractères au minimum.", Toast.LENGTH_SHORT).show();
         }
     }
 }

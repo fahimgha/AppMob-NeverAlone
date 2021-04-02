@@ -28,7 +28,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="7"
                 android:layout_height="wrap_content"
-                android:text="Dubai"
+                android:text="im"
                 android:textStyle="bold"
                 android:padding="10dp"
                 android:textSize="22sp" />

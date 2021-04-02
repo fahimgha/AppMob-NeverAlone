@@ -23,12 +23,15 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        //trouver le editText avec l'id du XML
         e1 = (EditText) findViewById(R.id.editTextEmailAddress);
         e2 = (EditText) findViewById(R.id.editTextPassWord);
+        //point d'entré  di SDDK d'autentification Firebase
         auth = FirebaseAuth.getInstance();
 
     }
     public void login(View v){
+        //methode pour se connecter
         auth.signInWithEmailAndPassword(e1.getText().toString(),e2.getText().toString())
         .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
             @Override

@@ -24,7 +24,7 @@ import com.google.firebase.database.ValueEventListener;
 public class JoinCircleActivity extends AppCompatActivity {
 
     Pinview pinview;
-    DatabaseReference reference, currentReference, circleReference;
+    DatabaseReference reference, joinedReference, circleReference;
     FirebaseUser user;
     FirebaseAuth auth;
     String current_user_id, join_user_id;
@@ -39,7 +39,7 @@ public class JoinCircleActivity extends AppCompatActivity {
         auth =FirebaseAuth.getInstance();
         user =auth.getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference().child("Users");
-        currentReference =FirebaseDatabase.getInstance().getReference().child("Users").child(user.getUid());
+        joinedReference =FirebaseDatabase.getInstance().getReference().child("Users").child(user.getUid());
 
         current_user_id =user.getUid();
 
@@ -53,29 +53,63 @@ public class JoinCircleActivity extends AppCompatActivity {
          query.addListenerForSingleValueEvent(new ValueEventListener() {
              @Override
              public void onDataChange(@NonNull DataSnapshot snapshot) {
-                 if(snapshot.exists()){
-                     CreateUser createUser = null;
-                     for(DataSnapshot childDss : snapshot.getChildren()){
-                         createUser = childDss.getValue(CreateUser.class);
-                         join_user_id = createUser.userId;
-                         circleReference =FirebaseDatabase.getInstance().getReference().child("Users")
-                                 .child(join_user_id).child("CircleMembers");
-                         CircleJoin circleJoin = new CircleJoin(current_user_id);
-                         CircleJoin circleJoin1 =new CircleJoin(join_user_id);
+                 if(snapshot.exists())
+                 {
 
-                         circleReference.child(user.getUid()).setValue(circleJoin)
-                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                     @Override
-                                     public void onComplete(@NonNull Task<Void> task) {
-                                         if(task.isSuccessful()){
-                                             Toast.makeText(getApplicationContext(), "L'utilisateur a rejoint le cercle avec success", Toast.LENGTH_SHORT).show();
-                                         }
-                                     }
-                                 });
+                     CreateUser createUser = null;
+                     for(DataSnapshot childDss : snapshot.getChildren())
+                     {
+                         createUser = childDss.getValue(CreateUser.class);
                      }
+                     join_user_id = createUser.userId;
+
+                     circleReference = FirebaseDatabase.getInstance().getReference().child("Users").child(join_user_id).child("CircleMembers");
+                     joinedReference = FirebaseDatabase.getInstance().getReference().child("Users").child(user.getUid()).child("CircleMembers");
+
+
+                     // get the correct values from the user
+
+
+
+                     CircleJoin circleJoin = new CircleJoin(current_user_id);
+                     final CircleJoin circleJoin1 = new CircleJoin(join_user_id);
+
+                     circleReference.child(user.getUid()).setValue(circleJoin)
+                             .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                 @Override
+                                 public void onComplete(@NonNull Task<Void> task) {
+                                     if(task.isSuccessful())
+                                     {
+                                         joinedReference.child(join_user_id).setValue(circleJoin1)
+                                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                     @Override
+                                                     public void onComplete(@NonNull Task<Void> task) {
+                                                         if(task.isSuccessful())
+                                                         {
+
+
+                                                             pinview.setValue("");
+                                                             Toast.makeText(getApplicationContext(),"You joined this circle successfully",Toast.LENGTH_LONG).show();
+                                                         }
+                                                     }
+                                                 });
+
+
+                                     }
+                                     else
+                                     {
+                                         pinview.setValue("");
+                                         Toast.makeText(getApplicationContext(),"Could not join, try again",Toast.LENGTH_SHORT).show();
+                                     }
+                                 }
+                             });
+
+
                  }
-                 else{
-                     Toast.makeText(getApplicationContext(), "le code du circle n'est pas valide", Toast.LENGTH_SHORT).show();
+                 else
+                 {
+                     pinview.setValue("");
+                     Toast.makeText(getApplicationContext(),"Invalid circle code entered",Toast.LENGTH_SHORT).show();
                  }
              }
 
